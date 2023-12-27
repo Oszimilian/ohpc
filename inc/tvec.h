@@ -16,6 +16,7 @@ namespace ohpc {
         Tvec();
         Tvec(std::initializer_list<int> values);
 
+
         const vec_t& get() const;
         std::size_t len() const;
         vec_t& set(std::list<int>& other);
@@ -27,7 +28,9 @@ namespace ohpc {
 
 
         Tvec& operator=(const Tvec& other);
+        Tvec& operator=(int val);
         Tvec& operator+=(const Tvec& other);
+        Tvec& operator=(vec_t& other);
 
         friend std::ostream& operator<<(std::ostream& stream, Tvec& val);
     private:

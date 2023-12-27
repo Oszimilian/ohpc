@@ -74,19 +74,35 @@ ohpc::Tvec& ohpc::Tvec::operator+=(const ohpc::Tvec &other) {
     return *this;
 }
 
+ohpc::Tvec& ohpc::Tvec::operator=(int val) {
+    if(val == 0) this->val.push_back(0);
+    while(val > 0) {
+        this->val.push_front(val % 10);
+        val /= 10;
+    }
+    return *this;
+}
+
+ohpc::Tvec& ohpc::Tvec::operator=(vec_t& other) {
+    this->val = other;
+    return *this;
+}
 
 std::ostream& ohpc::operator<<(std::ostream& stream, ohpc::Tvec& val) {
-
     for (auto it = val.get().begin(); it != val.get().end(); it++) {
         auto temp = it;
         stream << *it;
         if(++temp !=  val.get().end()) {
-            stream << " ";
+            stream << "";
         }
     }
 
     return stream;
 }
+
+
+
+
 
 
 

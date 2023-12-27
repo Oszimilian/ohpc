@@ -1,20 +1,30 @@
 #include <iostream>
-#include "tvec.h"
+
+
+#include "frac.h"
+#include "num.h"
 
 using namespace ohpc;
 
 
 
 int main() {
-    Tvec v {1,2,3,4};
-    Tvec b {5,6,7,8, 2, 3};
+    Tvec v {1,2};
+    Tvec b {0,4,6,0};
 
-    v.match(b);
-    std::cout << b << std::endl;
-    std::cout << v << std::endl;
+    Num n(v,b);
+    std::cout << "Numer: " << n << std::endl;
 
-    v.clean();
+    Frac f;
+    f = n;
 
-    std::cout << v.sum() << std::endl;
+    std::cout << "Fraction: " << f << std::endl;
+
+    Num n1;
+    n1 = f;
+
+    std::cout << "Number: " << n1 << std::endl;
+
+
     return 0;
 }

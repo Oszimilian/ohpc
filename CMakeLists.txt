@@ -10,6 +10,10 @@ add_executable(ohpc
         src/main.cpp
         inc/types.h
         inc/tvec.h
-        src/tvec.cpp)
+        src/tvec.cpp
+        inc/frac.h
+        src/frac.cpp
+        inc/num.h
+        src/num.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE inc)
