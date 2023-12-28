@@ -77,6 +77,13 @@ build CMakeFiles/ohpc.dir/src/num.cpp.obj: CXX_COMPILER__ohpc_unscanned_Debug C$
   OBJECT_DIR = CMakeFiles\ohpc.dir
   OBJECT_FILE_DIR = CMakeFiles\ohpc.dir\src
 
+build CMakeFiles/ohpc.dir/src/adder.cpp.obj: CXX_COMPILER__ohpc_unscanned_Debug C$:/Users/maximilian-tuxedo/CLionProjects/ohpc/src/adder.cpp || cmake_object_order_depends_target_ohpc
+  DEP_FILE = CMakeFiles\ohpc.dir\src\adder.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/maximilian-tuxedo/CLionProjects/ohpc/inc
+  OBJECT_DIR = CMakeFiles\ohpc.dir
+  OBJECT_FILE_DIR = CMakeFiles\ohpc.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ohpc
@@ -85,7 +92,7 @@ build CMakeFiles/ohpc.dir/src/num.cpp.obj: CXX_COMPILER__ohpc_unscanned_Debug C$
 #############################################
 # Link the executable ohpc.exe
 
-build ohpc.exe: CXX_EXECUTABLE_LINKER__ohpc_Debug CMakeFiles/ohpc.dir/src/main.cpp.obj CMakeFiles/ohpc.dir/src/tvec.cpp.obj CMakeFiles/ohpc.dir/src/frac.cpp.obj CMakeFiles/ohpc.dir/src/num.cpp.obj
+build ohpc.exe: CXX_EXECUTABLE_LINKER__ohpc_Debug CMakeFiles/ohpc.dir/src/main.cpp.obj CMakeFiles/ohpc.dir/src/tvec.cpp.obj CMakeFiles/ohpc.dir/src/frac.cpp.obj CMakeFiles/ohpc.dir/src/num.cpp.obj CMakeFiles/ohpc.dir/src/adder.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ohpc.dir

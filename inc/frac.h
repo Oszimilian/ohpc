@@ -7,15 +7,16 @@
 
 #include "tvec.h"
 #include "num.h"
+#include "element.h"
 
 namespace ohpc {
-    class Frac {
+    class Frac : public element{
     public:
         Frac();
         Frac(int numerator, int denumerator);
 
         Frac& operator=(const Num& other);
-        void doSomething();
+        virtual int get_type();
 
 
         friend std::ostream& operator<<(std::ostream& stream, Frac& val);

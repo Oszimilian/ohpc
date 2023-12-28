@@ -3,27 +3,45 @@
 
 #include "frac.h"
 #include "num.h"
+#include "element.h"
+#include "adder.h"
 
 using namespace ohpc;
 
 
 
 int main() {
+
+    std::list<ohpc::element*> equation;
+
     Tvec v {1,2};
     Tvec b {0,4,6,0};
 
     Num n(v,b);
-    std::cout << "Numer: " << n << std::endl;
+    std::cout << "Input Number: " << n << std::endl;
 
-    Frac f;
-    f = n;
+    Frac *t1 = new Frac;
+    *t1 = n;
+    std::cout << "Input Fraction: " << *t1 << std::endl;
 
-    std::cout << "Fraction: " << f << std::endl;
+    Adder *a1 = new Adder;
 
-    Num n1;
-    n1 = f;
 
-    std::cout << "Number: " << n1 << std::endl;
+    equation.push_back(t1);
+    equation.push_back(a1);
+
+    auto it = equation.begin();
+
+    if (ohpc::Frac *fracPtr = dynamic_cast<ohpc::Frac*>(*it)) {
+
+        std::cout << *fracPtr << std::endl;
+
+    }
+
+
+
+
+
 
 
     return 0;

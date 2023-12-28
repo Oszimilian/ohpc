@@ -34,3 +34,7 @@ std::ostream& ohpc::operator<<(std::ostream &stream, ohpc::Frac &val) {
     stream << val.numerator << "/" << val.denumerator;
     return stream;
 }
+
+int ohpc::Frac::get_type() {
+    return 0;
+}
