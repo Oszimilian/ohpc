@@ -9,12 +9,12 @@ ohpc::Num::Num() : left(), right(){
 
 }
 
-ohpc::Num::Num(ohpc::Tvec& left, ohpc::Tvec& right) : left(left), right(right){
+ohpc::Num::Num(bool sign, ohpc::Tvec& left, ohpc::Tvec& right) : sign(sign), left(left), right(right){
 
 }
 
 std::ostream& ohpc::operator<<(std::ostream& stream, ohpc::Num& val) {
-    stream << val.left << "." << val.right;
+    stream << (val.get_sign()? "":"-")<<val.left << "." << val.right;
     return stream;
 }
 
@@ -32,13 +32,20 @@ const ohpc::Tvec& ohpc::Num::get_right() const {
     return this->right;
 }
 
-ohpc::Num& ohpc::Num::operator=(ohpc::Frac &other) {
-    this->left = other.numerator / other.denumerator;
+const bool ohpc::Num::get_sign() const {
+    return this->sign;
+}
 
-    int i = other.numerator % other.denumerator;
+ohpc::Num& ohpc::Num::operator=(ohpc::Frac &other) {
+
+    this->sign = (other.numerator >= 0);
+    int temp_sign = this->sign ? 1 : -1;
+    this->left = (temp_sign * other.numerator) / other.denumerator;
+    int i = (temp_sign * other.numerator) % other.denumerator;
 
     vec_t vec;
 
+    int count = 0;
     if(i > 0) {
          do{
             if(i > other.denumerator) {
@@ -48,7 +55,7 @@ ohpc::Num& ohpc::Num::operator=(ohpc::Frac &other) {
                 vec.push_back(0);
             }
             i *= 10;
-        }while(i > 0);
+        }while(i > 0 && ++count < this->p_count);
          vec.pop_front();
     } else {
         vec.push_back(0);

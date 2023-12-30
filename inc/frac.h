@@ -22,6 +22,13 @@ namespace ohpc {
         friend std::ostream& operator<<(std::ostream& stream, Frac& val);
         friend class Num;
 
+        void simplify();
+
+        Frac& operator+(const Frac& other);
+        Frac& operator-(const Frac& other);
+        Frac& operator*(const Frac& other);
+        Frac& operator/(const Frac& other);
+
     public:
         int numerator;
         int denumerator;

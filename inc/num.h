@@ -15,10 +15,11 @@ namespace ohpc {
     class Num {
     public:
         Num();
-        Num(Tvec& left, Tvec& right);
+        Num(bool sign, Tvec& left, Tvec& right);
 
         const Tvec& get_right() const;
         const Tvec& get_left() const;
+        const bool get_sign() const;
         std::size_t decimal_places() const;
 
         Num& operator=(Frac& other);
@@ -29,6 +30,9 @@ namespace ohpc {
     private:
         Tvec left;
         Tvec right;
+        bool sign = PLUS;
+
+        int p_count = 10;
     };
 
     std::ostream& operator<<(std::ostream& stream, Num& val);

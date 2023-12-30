@@ -3,7 +3,8 @@
 //
 
 #include "adder.h"
+#include "types.h"
 
 int ohpc::Adder::get_type() {
-    return 1;
+    return ADDER;
 }

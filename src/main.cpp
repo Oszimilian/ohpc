@@ -8,16 +8,13 @@
 
 using namespace ohpc;
 
-
-
-int main() {
-
+void test1() {
     std::list<ohpc::element*> equation;
 
     Tvec v {1,2};
     Tvec b {0,4,6,0};
 
-    Num n(v,b);
+    Num n(PLUS, v,b);
     std::cout << "Input Number: " << n << std::endl;
 
     Frac *t1 = new Frac;
@@ -33,15 +30,25 @@ int main() {
     auto it = equation.begin();
 
     if (ohpc::Frac *fracPtr = dynamic_cast<ohpc::Frac*>(*it)) {
-
         std::cout << *fracPtr << std::endl;
-
     }
 
+}
 
 
 
+int main() {
 
+    Frac f1(4, 9);
+    Frac f2(11,3);
+
+    Frac z;
+    z = f1 / f2;
+
+    Num n;
+    n = z;
+    z.simplify();
+    std::cout << z << " " << n << std::endl;
 
 
     return 0;
