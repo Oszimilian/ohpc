@@ -9,6 +9,7 @@
 
 typedef std::list<int> vec_t;
 
+
 const int FRAC = 0;
 const int ADDER = 1;
 const int SUB = 2;

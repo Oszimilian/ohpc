@@ -5,6 +5,7 @@
 #include "num.h"
 #include "element.h"
 #include "adder.h"
+#include "Equation.h"
 
 using namespace ohpc;
 
@@ -35,10 +36,7 @@ void test1() {
 
 }
 
-
-
-int main() {
-
+void test2() {
     Frac f1(4, 9);
     Frac f2(11,3);
 
@@ -49,6 +47,16 @@ int main() {
     n = z;
     z.simplify();
     std::cout << z << " " << n << std::endl;
+}
+
+int main() {
+
+    //std::string str;
+
+    //std::getline(std::cin, str);
+
+    ohpc::Equation e;
+    e = "5 + e - 2.0 ( ) 5.8e";
 
 
     return 0;

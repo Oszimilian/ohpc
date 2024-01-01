@@ -17,6 +17,8 @@ add_executable(ohpc
         src/num.cpp
         inc/element.h
         inc/adder.h
-        src/adder.cpp)
+        src/adder.cpp
+        inc/Equation.h
+        src/Equation.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE inc)
