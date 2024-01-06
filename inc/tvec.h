@@ -31,6 +31,7 @@ namespace ohpc {
         Tvec& operator=(int val);
         Tvec& operator+=(const Tvec& other);
         Tvec& operator=(vec_t& other);
+        Tvec& operator=(const std::string& vec);
 
         friend std::ostream& operator<<(std::ostream& stream, Tvec& val);
     private:

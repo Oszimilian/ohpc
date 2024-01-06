@@ -8,6 +8,7 @@
 #include "element.h"
 #include <list>
 #include <string>
+#include <memory>
 
 namespace ohpc {
     class Equation {
@@ -16,7 +17,11 @@ namespace ohpc {
         Equation(const std::string& str);
 
         Equation& operator=(const std::string& str);
+
+        friend std::ostream& operator<<(std::ostream& stream, Equation& eq);
+        void change_stream_behaviour(std::string str);
     private:
+        std::string stream_behaviour = "";
         void init();
         void process_input_string(const std::string& str);
 
@@ -26,8 +31,11 @@ namespace ohpc {
         constexpr static int braket_ = 2;
 
         int get_element_type(const std::string& str);
+        static std::shared_ptr<element> get_operator_element(const std::string& op);
+        static std::shared_ptr<element> get_number_element(const std::string& op);
 
-        std::list<ohpc::element*> equation;
+
+        std::list<std::shared_ptr<element>> equation;
 
         std::list<std::string> possible_brakets;
         std::list<std::string> possible_numbers;
@@ -35,6 +43,8 @@ namespace ohpc {
 
 
     };
+
+    std::ostream& operator<<(std::ostream& stream, Equation& eq);
 }
 
 #endif //OHPC_EQUATION_H

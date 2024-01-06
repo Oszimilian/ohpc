@@ -16,8 +16,8 @@ add_executable(ohpc
         inc/num.h
         src/num.cpp
         inc/element.h
-        inc/adder.h
-        src/adder.cpp
+        inc/operators.h
+        src/operators.cpp
         inc/Equation.h
         src/Equation.cpp)
 

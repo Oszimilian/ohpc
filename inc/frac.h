@@ -16,7 +16,7 @@ namespace ohpc {
         Frac(int numerator, int denumerator);
 
         Frac& operator=(const Num& other);
-        virtual int get_type();
+        int get_type() override;
 
 
         friend std::ostream& operator<<(std::ostream& stream, Frac& val);

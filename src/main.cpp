@@ -4,7 +4,7 @@
 #include "frac.h"
 #include "num.h"
 #include "element.h"
-#include "adder.h"
+#include "operators.h"
 #include "Equation.h"
 
 using namespace ohpc;
@@ -51,13 +51,12 @@ void test2() {
 
 int main() {
 
-    //std::string str;
-
-    //std::getline(std::cin, str);
-
+    std::string str;
+    std::getline(std::cin, str);
     ohpc::Equation e;
-    e = "5 + e - 2.0 ( ) 5.8e";
+    e.change_stream_behaviour("\n");
 
-
+    e = str;
+    std::cout << e << std::endl;
     return 0;
 }

@@ -88,6 +88,19 @@ ohpc::Tvec& ohpc::Tvec::operator=(vec_t& other) {
     return *this;
 }
 
+ohpc::Tvec& ohpc::Tvec::operator=(const std::string& vec) {
+    auto it = std::find_if(vec.begin(),vec.end(), [](char c){return (c < '0' || c > '9' || c != '\0');});
+    if(it != vec.end()) {
+        for (const auto& i : vec) {
+            val.push_back((int)(i - '0'));
+        }
+    } else {
+        std::cout << "Vector is not only number: " << vec << std::endl;
+    }
+
+    return *this;
+}
+
 std::ostream& ohpc::operator<<(std::ostream& stream, ohpc::Tvec& val) {
     for (auto it = val.get().begin(); it != val.get().end(); it++) {
         auto temp = it;

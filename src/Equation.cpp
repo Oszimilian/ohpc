@@ -8,6 +8,10 @@
 #include <iostream>
 #include <algorithm>
 
+#include "num.h"
+#include "frac.h"
+#include "operators.h"
+
 ohpc::Equation::Equation() : equation(){
     init();
 }
@@ -38,19 +42,20 @@ void ohpc::Equation::process_input_string(const std::string &str) {
     for (const auto& i : equation_parts) {
         switch (get_element_type(i)) {
             case operator_:
-                std::cout << i << " => Operator" << std::endl;
+                equation.push_back(get_operator_element(i));
                 break;
 
             case number_:
-                std::cout << i << " => Number" << std::endl;
+                equation.push_back(get_number_element(i));
                 break;
 
             case braket_:
-                std::cout << i << " => Braket" << std::endl;
                 break;
 
             case error_:
                 std::cout << i << " => Not valid" << std::endl;
+                exit(EXIT_FAILURE);
+                return;
                 break;
 
             default : break;
@@ -107,5 +112,80 @@ void ohpc::Equation::init() {
     possible_operator.emplace_back("-");
     possible_operator.emplace_back("*");
     possible_operator.emplace_back("/");
+}
 
+void ohpc::Equation::change_stream_behaviour(std::string str) {
+    stream_behaviour = str;
+}
+
+std::ostream& ohpc::operator<<(std::ostream &stream, ohpc::Equation &eq) {
+
+    for (const auto& i : eq.equation) {
+        switch (i->get_type()) {
+            case ADDER:
+                stream << " + " << eq.stream_behaviour;
+                break;
+
+            case SUB:
+                stream << " - " << eq.stream_behaviour;
+                break;
+
+            case DIV:
+                stream << " / " << eq.stream_behaviour;
+                break;
+
+            case MUL:
+                stream << " * " << eq.stream_behaviour;
+                break;
+
+            case FRAC:
+                auto* frac = dynamic_cast<ohpc::Frac*>(i.get());
+                ohpc::Num n;
+                n = *frac;
+                stream << " " << n << " " << eq.stream_behaviour;
+                break;
+
+        }
+    }
+
+    return stream;
+}
+
+std::shared_ptr<ohpc::element> ohpc::Equation::get_operator_element(const std::string &op) {
+
+    switch(op[0]) {
+        case '+' : return std::make_shared<ohpc::Adder>();
+        case '-' : return std::make_shared<ohpc::Subber>();
+        case '/' : return std::make_shared<ohpc::Diver>();
+        case '*' : return std::make_shared<ohpc::Muller>();
+        default: std::cout << "Cant extract element from: " << op[0] << std::endl; break;
+    }
+
+    return nullptr;
+}
+
+std::shared_ptr<ohpc::element> ohpc::Equation::get_number_element(const std::string &op) {
+    auto point = std::find_if(op.begin(), op.end(), [](char c) {return c == '.';});
+
+
+    ohpc::Tvec nl;
+    ohpc::Tvec nr;
+
+    std::string left(op.begin(), point);
+
+    nl = left;
+
+
+    if (point != op.end()) {
+        std::string right(point + 1, op.end());
+        nr = right;
+    } else {
+        nr = 0;
+    }
+    ohpc::Num number(PLUS, nl, nr);
+    std::shared_ptr<ohpc::Frac> fraction = std::make_shared<ohpc::Frac>();
+
+    *fraction = number;
+
+    return fraction;
 }
