@@ -19,6 +19,7 @@ namespace ohpc {
         Equation(const std::string& str);
 
         Equation& operator=(const std::string& str);
+        Equation& operator=(const std::list<std::shared_ptr<element>>& other);
 
         friend std::ostream& operator<<(std::ostream& stream, Equation& eq);
         friend class Shuntingyard;

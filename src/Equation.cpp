@@ -27,6 +27,11 @@ ohpc::Equation& ohpc::Equation::operator=(const std::string &str) {
     return *this;
 }
 
+ohpc::Equation& ohpc::Equation::operator=(const std::list<std::shared_ptr<element>> &other) {
+    equation = other;
+    return *this;
+}
+
 void ohpc::Equation::process_input_string(const std::string &str) {
     std::list<std::string> equation_parts;
 

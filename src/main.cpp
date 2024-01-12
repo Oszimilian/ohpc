@@ -6,6 +6,7 @@
 #include "element.h"
 #include "operators.h"
 #include "Equation.h"
+#include "Shuntingyard.h"
 
 using namespace ohpc;
 
@@ -58,5 +59,9 @@ int main() {
 
     e = str;
     std::cout << e << std::endl;
+    ohpc::Shuntingyard s;
+    s = e;
+
+
     return 0;
 }
