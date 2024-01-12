@@ -11,6 +11,8 @@
 #include <memory>
 
 namespace ohpc {
+    class Shuntingyard;
+
     class Equation {
     public:
         Equation();
@@ -19,6 +21,7 @@ namespace ohpc {
         Equation& operator=(const std::string& str);
 
         friend std::ostream& operator<<(std::ostream& stream, Equation& eq);
+        friend class Shuntingyard;
         void change_stream_behaviour(std::string str);
     private:
         std::string stream_behaviour = "";
@@ -28,7 +31,8 @@ namespace ohpc {
         constexpr static int error_ = -1;
         constexpr static int operator_ = 0;
         constexpr static int number_ = 1;
-        constexpr static int braket_ = 2;
+        constexpr static int braket_open_ = 2;
+        constexpr static int braket_close_ = 3;
 
         int get_element_type(const std::string& str);
         static std::shared_ptr<element> get_operator_element(const std::string& op);

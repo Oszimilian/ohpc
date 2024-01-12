@@ -19,6 +19,8 @@ add_executable(ohpc
         inc/operators.h
         src/operators.cpp
         inc/Equation.h
-        src/Equation.cpp)
+        src/Equation.cpp
+        inc/Shuntingyard.h
+        src/Shuntingyard.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE inc)

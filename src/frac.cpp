@@ -40,9 +40,8 @@ std::ostream& ohpc::operator<<(std::ostream &stream, ohpc::Frac &val) {
     return stream;
 }
 
-int ohpc::Frac::get_type() {
-    return FRAC;
-}
+int ohpc::Frac::get_type() {return FRAC;}
+int ohpc::Frac::get_prio() {return FRAC_PRIO;}
 
 void ohpc::Frac::simplify() {
     int highest_part = (numerator > denumerator) ? numerator : denumerator;

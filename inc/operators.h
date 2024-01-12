@@ -10,18 +10,32 @@
 namespace ohpc {
     class Adder : public element{
         int get_type() override;
+        int get_prio() override;
     };
 
     class Subber : public element {
         int get_type() override;
+        int get_prio() override;
     };
 
     class Diver : public element {
         int get_type() override;
+        int get_prio() override;
     };
 
     class Muller : public element {
         int get_type() override;
+        int get_prio() override;
+    };
+
+    class OpenBraket : public element {
+        int get_type() override;
+        int get_prio() override;
+    };
+
+    class CloseBraket : public element {
+        int get_type() override;
+        int get_prio() override;
     };
 }
 

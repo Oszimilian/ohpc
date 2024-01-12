@@ -49,7 +49,12 @@ void ohpc::Equation::process_input_string(const std::string &str) {
                 equation.push_back(get_number_element(i));
                 break;
 
-            case braket_:
+            case braket_open_:
+                equation.push_back(std::make_shared<ohpc::OpenBraket>());
+                break;
+
+            case braket_close_:
+                equation.push_back(std::make_shared<ohpc::CloseBraket>());
                 break;
 
             case error_:
@@ -65,9 +70,8 @@ void ohpc::Equation::process_input_string(const std::string &str) {
 
 int ohpc::Equation::get_element_type(const std::string &str) {
 
-    for (const auto& i : possible_brakets) {
-        if(i == str) return braket_;
-    }
+    if(str[0] == '(') return braket_open_;
+    else if (str[0] == ')') return braket_close_;
 
     for (const auto& i : possible_operator) {
         if(i == str) return operator_;
@@ -86,10 +90,6 @@ void ohpc::Equation::init() {
     //Brakets
     possible_brakets.emplace_back("(");
     possible_brakets.emplace_back(")");
-    possible_brakets.emplace_back("[");
-    possible_brakets.emplace_back("]");
-    possible_brakets.emplace_back("{");
-    possible_brakets.emplace_back("}");
 
     //Numbers
     possible_numbers.emplace_back("0");
@@ -189,3 +189,4 @@ std::shared_ptr<ohpc::element> ohpc::Equation::get_number_element(const std::str
 
     return fraction;
 }
+

@@ -13,6 +13,7 @@ namespace ohpc {
     class element {
     public:
         virtual int get_type() = 0;
+        virtual int get_prio() = 0;
     };
 }
 

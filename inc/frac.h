@@ -17,6 +17,7 @@ namespace ohpc {
 
         Frac& operator=(const Num& other);
         int get_type() override;
+        int get_prio() override;
 
 
         friend std::ostream& operator<<(std::ostream& stream, Frac& val);
