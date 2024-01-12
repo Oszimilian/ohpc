@@ -61,7 +61,10 @@ int main() {
     std::cout << e << std::endl;
     ohpc::Shuntingyard s;
     s = e;
-
+    auto sol = s.solve();
+    ohpc::Num num;
+    num = sol;
+    std::cout << sol << " = " << num << std::endl;
 
     return 0;
 }

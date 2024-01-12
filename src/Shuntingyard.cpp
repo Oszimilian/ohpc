@@ -71,3 +71,85 @@ void ohpc::Shuntingyard::process(const ohpc::Equation& other) {
     infix = out;
     std::cout << infix << std::endl;
 }
+
+std::shared_ptr<ohpc::element> ohpc::Shuntingyard::solve_part(std::shared_ptr<ohpc::element> &l,
+                                                              std::shared_ptr<ohpc::element> &m,
+                                                              std::shared_ptr<ohpc::element> &r) {
+    std::shared_ptr<ohpc::element> solution;
+    ohpc::Frac f;
+    auto* l_tmp = dynamic_cast<ohpc::Frac*>(l.get());
+    auto* m_tmp = dynamic_cast<ohpc::Frac*>(m.get());
+
+    if (l_tmp != nullptr && m_tmp != nullptr) {
+        switch (r->get_type()) {
+            case ADDER:
+                f = *l_tmp + *m_tmp;
+                solution = std::make_shared<ohpc::Frac>(f);
+                break;
+
+            case SUB:
+                f = *l_tmp - *m_tmp;
+                solution = std::make_shared<ohpc::Frac>(f);
+                break;
+
+            case DIV:
+                f = *l_tmp / *m_tmp;
+                solution = std::make_shared<ohpc::Frac>(f);
+                break;
+
+            case MUL:
+                f = *l_tmp * *m_tmp;
+                solution = std::make_shared<ohpc::Frac>(f);
+                break;
+
+            default: break;
+        }
+    } else {
+        exit(EXIT_FAILURE);
+    }
+
+    return solution;
+}
+
+ohpc::Frac ohpc::Shuntingyard::solve() {
+
+
+    while (infix.equation.size() > 1) {
+        bool found = false;
+        auto it = infix.equation.begin();
+        for (const auto& i : infix.equation) {
+
+            switch (i->get_type()) {
+                case ADDER:
+                case SUB:
+                case DIV:
+                case MUL:
+                    found = true;
+                    break;
+
+                default: break;
+            }
+            if (found) break;
+            it++;
+        }
+
+        auto r = *it;
+        auto m = *(--it);
+        auto l = *(--it);
+
+
+        auto sol = solve_part(l,m,r);
+        for (int i = 0; i < 3; i++) {
+            infix.equation.erase(it++);
+        }
+
+        infix.equation.push_front(sol);
+    }
+
+    ohpc::Frac *f = dynamic_cast<ohpc::Frac*>(infix.equation.begin()->get());
+    if(f != nullptr) {
+        return *f;
+    } else {
+        exit(EXIT_FAILURE);
+    }
+}
