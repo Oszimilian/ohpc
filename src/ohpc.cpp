@@ -8,7 +8,6 @@ ohpc::Ohpc::~Ohpc() {
     if (dbg) {
         std::cout.rdbuf(old_stream);
     }
-    std::cout << "Test" << std::endl;
 }
 
 std::tuple<ohpc::Num, ohpc::Frac> ohpc::Ohpc::calc(const std::string &str) {

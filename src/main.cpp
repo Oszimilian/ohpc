@@ -18,7 +18,7 @@ int main() {
     try {
 
         ohpc::Ohpc solver;
-        solver.debug("debug.txt");
+        //solver.debug("debug.txt");
         auto sol = solver.calc(str);
 
         std::cout << sol << std::endl;
