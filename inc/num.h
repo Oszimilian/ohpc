@@ -7,7 +7,7 @@
 
 #include "tvec.h"
 
-
+#include "myexceptions.h"
 
 namespace ohpc {
     class Frac;

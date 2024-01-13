@@ -5,7 +5,7 @@
 #ifndef OHPC_ELEMENT_H
 #define OHPC_ELEMENT_H
 
-
+#include "myexceptions.h"
 
 namespace ohpc {
 

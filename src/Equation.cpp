@@ -23,7 +23,6 @@ ohpc::Equation::Equation(const std::string& str) : equation(){
 
 ohpc::Equation& ohpc::Equation::operator=(const std::string &str) {
     process_input_string(str);
-
     return *this;
 }
 
@@ -40,37 +39,42 @@ void ohpc::Equation::process_input_string(const std::string &str) {
     std::istream_iterator<std::string> it = std::istream_iterator<std::string>(iss);
     std::istream_iterator<std::string> it_end;
 
-    while(it_end != it) {
-        equation_parts.push_back(*it++);
-    }
-
-    for (const auto& i : equation_parts) {
-        switch (get_element_type(i)) {
-            case operator_:
-                equation.push_back(get_operator_element(i));
-                break;
-
-            case number_:
-                equation.push_back(get_number_element(i));
-                break;
-
-            case braket_open_:
-                equation.push_back(std::make_shared<ohpc::OpenBraket>());
-                break;
-
-            case braket_close_:
-                equation.push_back(std::make_shared<ohpc::CloseBraket>());
-                break;
-
-            case error_:
-                std::cout << i << " => Not valid" << std::endl;
-                exit(EXIT_FAILURE);
-                return;
-                break;
-
-            default : break;
+    if (!str.empty()) {
+        while(it_end != it) {
+            equation_parts.push_back(*it++);
         }
+
+        if(!equation_parts.empty()) {
+            for (const auto& i : equation_parts) {
+                switch (get_element_type(i)) {
+                    case operator_:
+                        equation.push_back(get_operator_element(i));
+                        break;
+
+                    case number_:
+                        equation.push_back(get_number_element(i));
+                        break;
+
+                    case braket_open_:
+                        equation.push_back(std::make_shared<ohpc::OpenBraket>());
+                        break;
+
+                    case braket_close_:
+                        equation.push_back(std::make_shared<ohpc::CloseBraket>());
+                        break;
+
+                    default :
+                        throw Input_Error(std::string("Input Element cant process because it is not valid!"));
+                        break;
+                }
+            }
+        } else {
+            throw Input_Error("Input Stirng contains nothing readable! ");
+        }
+    } else {
+        throw Input_Error("Input String is Empty!");
     }
+
 }
 
 int ohpc::Equation::get_element_type(const std::string &str) {
@@ -83,10 +87,12 @@ int ohpc::Equation::get_element_type(const std::string &str) {
     }
 
     for (const auto& i : str) {
-        auto it = std::find_if(possible_numbers.begin(), possible_numbers.end(), [&i](std::string str) {
-            return (i == str[0]);
+        auto it = std::find_if(possible_numbers.begin(), possible_numbers.end(), [&i](std::string l_str) {
+            return (i == l_str[0]);
         });
-        if(it == possible_numbers.end()) return error_;
+        if(it == possible_numbers.end()) {
+            throw Input_Error("Input contains not readable Character!");
+        }
     }
     return number_;
 }
@@ -143,6 +149,14 @@ std::ostream& ohpc::operator<<(std::ostream &stream, ohpc::Equation &eq) {
                 stream << " * " << eq.stream_behaviour;
                 break;
 
+            case BRAK_OPEN :
+                stream << " ( " << eq.stream_behaviour;
+                break;
+
+            case BRAK_CLOSE :
+                stream << " ) " << eq.stream_behaviour;
+                break;
+
             case FRAC:
                 auto* frac = dynamic_cast<ohpc::Frac*>(i.get());
                 ohpc::Num n;
@@ -163,7 +177,8 @@ std::shared_ptr<ohpc::element> ohpc::Equation::get_operator_element(const std::s
         case '-' : return std::make_shared<ohpc::Subber>();
         case '/' : return std::make_shared<ohpc::Diver>();
         case '*' : return std::make_shared<ohpc::Muller>();
-        default: std::cout << "Cant extract element from: " << op[0] << std::endl; break;
+        default:
+            throw Input_Error("Input contains invalid operator!");
     }
 
     return nullptr;

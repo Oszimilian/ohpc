@@ -44,23 +44,28 @@ int ohpc::Frac::get_type() {return FRAC;}
 int ohpc::Frac::get_prio() {return FRAC_PRIO;}
 
 void ohpc::Frac::simplify() {
-    int highest_part = (numerator > denumerator) ? numerator : denumerator;
-    bool sign = PLUS;
-    if(numerator < 0) {
-        sign = MINUS;
-        numerator *= -1;
-    }
-
-    for (int i = 2; i < highest_part; i++) {
-        while(((numerator % i) == 0) && ((denumerator % i) == 0)) {
-            numerator /= i;
-            denumerator /= i;
+    if (denumerator != 0) {
+        int highest_part = (numerator > denumerator) ? numerator : denumerator;
+        bool sign = PLUS;
+        if(numerator < 0) {
+            sign = MINUS;
+            numerator *= -1;
         }
+
+        for (int i = 2; i < highest_part; i++) {
+            while(((numerator % i) == 0) && ((denumerator % i) == 0)) {
+                numerator /= i;
+                denumerator /= i;
+            }
+        }
+
+        if (sign == MINUS) {
+            numerator *= -1;
+        }
+    } else {
+        throw Conversion_Error("Denumerator is zero! ");
     }
 
-    if (sign == MINUS) {
-        numerator *= -1;
-    }
 }
 
 ohpc::Frac& ohpc::Frac::operator+(const ohpc::Frac &other) {

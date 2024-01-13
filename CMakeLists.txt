@@ -21,6 +21,8 @@ add_executable(ohpc
         inc/Equation.h
         src/Equation.cpp
         inc/Shuntingyard.h
-        src/Shuntingyard.cpp)
+        src/Shuntingyard.cpp
+        inc/myexceptions.h
+        inc/ohpc.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE inc)

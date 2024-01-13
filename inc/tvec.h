@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "types.h"
+#include "myexceptions.h"
 
 namespace ohpc {
     class Tvec {

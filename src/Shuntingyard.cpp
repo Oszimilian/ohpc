@@ -6,6 +6,7 @@
 #include "types.h"
 #include "Shuntingyard.h"
 
+
 ohpc::Shuntingyard::Shuntingyard() : infix(), type_prio(){
 
 }
@@ -24,6 +25,8 @@ ohpc::Shuntingyard& ohpc::Shuntingyard::operator=(const ohpc::Equation &others) 
 void ohpc::Shuntingyard::process(const ohpc::Equation& other) {
     std::list<std::shared_ptr<ohpc::element>> out;
     std::stack<std::shared_ptr<ohpc::element>> stack;
+
+
 
     for (const auto& i : other.equation) {
         switch (i->get_type()) {
@@ -83,29 +86,38 @@ std::shared_ptr<ohpc::element> ohpc::Shuntingyard::solve_part(std::shared_ptr<oh
     if (l_tmp != nullptr && m_tmp != nullptr) {
         switch (r->get_type()) {
             case ADDER:
+                std::cout << *l_tmp << " + " << *m_tmp << " = ";
                 f = *l_tmp + *m_tmp;
+                std::cout << f << std::endl;
                 solution = std::make_shared<ohpc::Frac>(f);
                 break;
 
             case SUB:
+                std::cout << *l_tmp << " - " << *m_tmp << " = ";
                 f = *l_tmp - *m_tmp;
+                std::cout << f << std::endl;
                 solution = std::make_shared<ohpc::Frac>(f);
                 break;
 
             case DIV:
+                std::cout << *l_tmp << " / " << *m_tmp << " = ";
                 f = *l_tmp / *m_tmp;
+                std::cout << f << std::endl;
                 solution = std::make_shared<ohpc::Frac>(f);
                 break;
 
             case MUL:
+                std::cout << *l_tmp << " * " << *m_tmp << " = ";
                 f = *l_tmp * *m_tmp;
+                std::cout << f << std::endl;
                 solution = std::make_shared<ohpc::Frac>(f);
                 break;
 
-            default: break;
+            default:
+                throw Input_Error("No valid Input!");
         }
     } else {
-        exit(EXIT_FAILURE);
+        throw Solving_Error("Fractions are NULL");
     }
 
     return solution;
@@ -117,6 +129,8 @@ ohpc::Frac ohpc::Shuntingyard::solve() {
     while (infix.equation.size() > 1) {
         bool found = false;
         auto it = infix.equation.begin();
+        int j = 0;
+
         for (const auto& i : infix.equation) {
 
             switch (i->get_type()) {
@@ -131,19 +145,26 @@ ohpc::Frac ohpc::Shuntingyard::solve() {
             }
             if (found) break;
             it++;
+            j++;
         }
 
-        auto r = *it;
-        auto m = *(--it);
-        auto l = *(--it);
+        if (found) {
+            auto r = *it;
+            auto m = *(--it);
+            auto l = *(--it);
 
+            auto sol = solve_part(l,m,r);
+            for (int i = 0; i < 3; i++) {
+                infix.equation.erase(it++);
+            }
 
-        auto sol = solve_part(l,m,r);
-        for (int i = 0; i < 3; i++) {
-            infix.equation.erase(it++);
+            infix.equation.insert(std::next(infix.equation.begin(), j - 2), sol);
+
+            std::cout << infix << std::endl << std::endl;
+        } else {
+            throw Solving_Error("Cant solve equation. Maybe there is a braket with no previous operator!");
         }
 
-        infix.equation.push_front(sol);
     }
 
     ohpc::Frac *f = dynamic_cast<ohpc::Frac*>(infix.equation.begin()->get());
