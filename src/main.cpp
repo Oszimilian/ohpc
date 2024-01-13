@@ -10,30 +10,23 @@ using namespace ohpc;
 
 int main() {
 
+    std::cout << "Input: ";
+    std::string str;
+    std::getline(std::cin, str);
+    std::cout << std::endl;
+
     try {
 
-        //std::string str;
-        //std::getline(std::cin, str);
-        ohpc::Equation e;
-        e.change_stream_behaviour("\n");
+        ohpc::Ohpc solver;
+        solver.debug("debug.txt");
+        auto sol = solver.calc(str);
 
-        //e = str;
-        e = "5 + 2 ( 2 - 0.6 )";
-        std::cout << e << std::endl;
-        ohpc::Shuntingyard s;
-        s = e;
-        auto sol = s.solve();
-        ohpc::Num num;
-        num = sol;
-        std::cout << sol << " = " << num << std::endl;
-    } catch (ohpc::Input_Error& e) {
-        std::cerr << e.what() << std::endl;
-    } catch (ohpc::Conversion_Error& e) {
-        std::cerr << e.what() << std::endl;
-    } catch (ohpc::Solving_Error& e) {
+        std::cout << sol << std::endl;
+
+    } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 
-
+    std::cout << "Ende" << std::endl;
     return 0;
 }
