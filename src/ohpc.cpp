@@ -2,6 +2,8 @@
 // Created by maxim on 13.01.2024.
 //
 #include <ctime>
+#include <time.h>
+#include <stdio.h>
 #include "ohpc.h"
 
 ohpc::Ohpc::~Ohpc() {
@@ -41,14 +43,16 @@ void ohpc::Ohpc::debug(std::string path) {
         old_stream = std::cout.rdbuf();
         std::cout.rdbuf(file->rdbuf());
 
+        /*
         time_t now = time(NULL);
         struct tm localTime;
-        localtime_s(&localTime, &now);
+        localtime(&localTime, &now);
         char buffer[80];
         strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &localTime);
 
         std::cout << std::endl << buffer << std::endl;
-
+        */
+       
     } else {
         throw std::runtime_error("Can't open debug file!");
     }
